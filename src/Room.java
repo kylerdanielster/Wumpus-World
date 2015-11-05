@@ -18,6 +18,10 @@ import java.util.HashMap;
 public class Room
 {
     private String description;
+
+    /** This/each room has a hash map of exits
+     *  String direction, Room direction destination
+     */
     private HashMap<String, Room> exits;        // stores exits of this room.
 
     /**
