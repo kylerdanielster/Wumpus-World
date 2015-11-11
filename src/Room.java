@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
 
@@ -18,6 +19,9 @@ import java.util.HashMap;
 public class Room
 {
     private String description;
+    private BasicItem item; // Decorators
+    private BasicSignal signals; // Decorators
+
 
     /** This/each room has a hash map of exits
      *  String direction, Room direction destination
@@ -90,6 +94,22 @@ public class Room
     public Room getExit(String direction)
     {
         return exits.get(direction);
+    }
+
+    public BasicItem getItem() {
+        return item;
+    }
+
+    public void setItem(BasicItem item) {
+        this.item = item;
+    }
+
+    public BasicSignal getSignals() {
+        return signals;
+    }
+
+    public void setSignals(BasicSignal signals) {
+        this.signals = signals;
     }
 }
 

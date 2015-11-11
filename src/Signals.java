@@ -1,5 +1,7 @@
 /**
  * Created by kyle on 11/4/15.
  */
-public abstract class Signals {
+public interface Signals {
+
+    public String getSignal();
 }

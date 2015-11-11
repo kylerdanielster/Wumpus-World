@@ -19,6 +19,10 @@ public class Game
 {
     private Parser parser;
     private Room currentRoom;
+    private Robot player;
+    private Wumpus wumpus;
+    //TODO: game will manage items and signals as well as rooms and player
+
 
     /**
      * Create the game and initialise its internal map.
@@ -27,6 +31,8 @@ public class Game
     {
         createRooms();
         parser = new Parser();
+        player = Robot.getInstance();
+        wumpus = Wumpus.getInstance();
     }
 
     /**
@@ -34,6 +40,8 @@ public class Game
      */
     private void createRooms()
     {
+        //TODO: creates and array list of 2D array of rooms
+
         Room outside, theater, pub, lab, office;
 
         // create the rooms
@@ -112,6 +120,18 @@ public class Game
         else if (commandWord.equals("go")) {
             goRoom(command);
         }
+        else if (commandWord.equals("shoot")) {
+            shootRoom(command);
+        }
+        else if (commandWord.equals("grab")) {
+            grabItem(command);
+        }
+        else if (commandWord.equals("drop")) {
+            dropItem(command);
+        }
+        else if (commandWord.equals("items")) {
+            items();
+        }
         else if (commandWord.equals("quit")) {
             wantToQuit = quit(command);
         }
@@ -119,11 +139,27 @@ public class Game
         return wantToQuit;
     }
 
+    private void items() {
+
+    }
+
+    private void dropItem(Command command) {
+
+    }
+
+    private void grabItem(Command command) {
+
+    }
+
+    private void shootRoom(Command command) {
+
+    }
+
     // implementations of user commands:
 
     /**
      * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the 
+     * Here we print some stupid, cryptic message and a list of the
      * command words.
      */
     private void printHelp()
