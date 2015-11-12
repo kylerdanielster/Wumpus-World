@@ -69,7 +69,8 @@ public class Robot {
         return items;
     }
 
-    public void setItems(ArrayList<ItemDecorator> items) {
-        this.items = items;
+    public void addItems(ItemDecorator item) {
+        items = new ArrayList<ItemDecorator>();
+        this.items.add(item);
     }
 }

@@ -66,6 +66,17 @@ public class Game
         office.setExit("west", lab);
 
         currentRoom = outside;  // start game outside
+
+        /********************************************
+         *                                          *
+         * BASIC TEST OF THE ROOM SIGNALS AND ITEMS *
+         *                                          *
+         ******************************************/
+        outside.addItem(new BasicItem());
+        System.out.println(outside.getItems().get(0).getDescription());
+
+        outside.addSignal(new BasicSignal());
+        System.out.println(outside.getSignals().getSignal());
     }
 
     /**
