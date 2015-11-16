@@ -58,7 +58,7 @@ public class Robot {
 
     public ItemDecorator getWeapon() {
 
-        return weapon;
+        return weapon; // privacy leak?
     }
 
     public void setWeapon(ItemDecorator weapon) {
@@ -66,7 +66,7 @@ public class Robot {
     }
 
     public ArrayList<ItemDecorator> getItems() {
-        return items;
+        return items; // privacy leak?
     }
 
     public void addItems(ItemDecorator item) {

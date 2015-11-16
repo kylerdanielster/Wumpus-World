@@ -98,7 +98,7 @@ public class Room
     }
 
     public BasicSignal getSignals() {
-        return signals;
+        return signals; //privacy leak?
     }
 
     public void addSignal(BasicSignal signal) {
@@ -106,7 +106,7 @@ public class Room
     }
 
     public ArrayList<BasicItem> getItems() {
-        return items;
+        return items; //privacy leak?
     }
 
     public void addItem(BasicItem item) {

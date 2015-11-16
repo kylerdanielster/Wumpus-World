@@ -71,7 +71,7 @@ public class Game
          *                                          *
          * BASIC TEST OF THE ROOM SIGNALS AND ITEMS *
          *                                          *
-         ******************************************/
+         *******************************************/
         outside.addItem(new BasicItem());
         System.out.println(outside.getItems().get(0).getDescription());
 
