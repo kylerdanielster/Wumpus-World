@@ -1,7 +1,12 @@
 /**
  * Created by kyle on 11/4/15.
  */
-public interface Signals {
+public class Signals {
 
-    public String getSignal();
+    String signal;
+
+    public String getSignal()
+    {
+        return signal;
+    }
 }

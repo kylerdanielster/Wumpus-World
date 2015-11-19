@@ -40,7 +40,18 @@ public class Game
      */
     private void createRooms()
     {
-        //TODO: creates and array list of 2D array of rooms
+        Room[][] rooms = new Room[8][8];
+
+        for(int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                rooms[i][j] = new Room(i + "," + j);
+                System.out.print(" " + rooms[i][j].getShortDescription());
+            }
+            System.out.println();
+        }
+
 
         Room outside, theater, pub, lab, office;
 

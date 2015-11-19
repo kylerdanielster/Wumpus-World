@@ -19,8 +19,7 @@ import java.util.HashMap;
 public class Room
 {
     private String description;
-    private ArrayList <BasicItem> items; // Decorators
-    private BasicSignal signals; // Decorators
+    private ArrayList <Signals> items;
     private Wumpus wumpus = null;
 
 
@@ -95,23 +94,6 @@ public class Room
     public Room getExit(String direction)
     {
         return exits.get(direction);
-    }
-
-    public BasicSignal getSignals() {
-        return signals; //privacy leak?
-    }
-
-    public void addSignal(BasicSignal signal) {
-        this.signals = signal;
-    }
-
-    public ArrayList<BasicItem> getItems() {
-        return items; //privacy leak?
-    }
-
-    public void addItem(BasicItem item) {
-        items = new ArrayList<BasicItem>();
-        this.items.add(item);
     }
 
     public void setWumpus(){

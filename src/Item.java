@@ -1,12 +1,25 @@
 /**
  * Created by kyle on 11/4/15.
  */
-public interface Item {
+public class Item {
 
-    public String getDescription();
+    String description;
+    int weight;
+    int score;
 
-    public int getWeight();
+    public String getDescription()
+    {
+        return description;
+    }
 
-    public int getScore();
+    public int getWeight()
+    {
+        return weight;
+    }
+
+    public int getScore()
+    {
+        return score;
+    }
 
 }

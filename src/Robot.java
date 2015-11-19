@@ -10,7 +10,7 @@ public class Robot {
     private int lives = 1;
     private ItemDecorator weapon;
     private int arrow = 1;
-    private ArrayList <ItemDecorator> items;
+    private ArrayList <Item> items;
 
     private static Robot robotInstance;
 
@@ -56,21 +56,4 @@ public class Robot {
         this.arrow = arrow;
     }
 
-    public ItemDecorator getWeapon() {
-
-        return weapon; // privacy leak?
-    }
-
-    public void setWeapon(ItemDecorator weapon) {
-        this.weapon = weapon;
-    }
-
-    public ArrayList<ItemDecorator> getItems() {
-        return items; // privacy leak?
-    }
-
-    public void addItems(ItemDecorator item) {
-        items = new ArrayList<ItemDecorator>();
-        this.items.add(item);
-    }
 }
