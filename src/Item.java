@@ -1,7 +1,7 @@
 /**
  * Created by kyle on 11/4/15.
  */
-public class Item {
+public abstract class Item {
 
     String description;
     int weight;
