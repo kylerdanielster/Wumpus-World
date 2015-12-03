@@ -1,0 +1,27 @@
+/**
+ * Created by kyle on 12/2/15.
+ */
+public class Gold extends Item{
+    Signals glitters;
+
+    public Gold()
+    {
+        super();
+        glitters = new Signals("Something is glittering.");
+
+    }
+
+
+    public Gold(Gold gold)
+    {
+        super();
+        this.glitters = gold.glitters;
+
+    }
+
+    public Gold clone()
+    {
+        return new Gold(this);
+    }
+
+}

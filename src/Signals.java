@@ -1,9 +1,13 @@
 /**
  * Created by kyle on 11/4/15.
  */
-public abstract class Signals {
+public class Signals {
 
     String signal;
+    public Signals(String s)
+    {
+        signal = s;
+    }
 
     public String getSignal()
     {

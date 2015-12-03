@@ -19,9 +19,10 @@ import java.util.HashMap;
 public class Room
 {
     private String description;
-    private ArrayList <Signals> items;
+    private ArrayList <Signals> signals;
     private Wumpus wumpus = null;
-
+    private Item item = null;
+    private boolean hasObject = false;
 
     /** This/each room has a hash map of exits
      *  String direction, Room direction destination
@@ -36,6 +37,7 @@ public class Room
      */
     public Room(String description)
     {
+        signals = new ArrayList<>(signals);
         this.description = description;
         exits = new HashMap<String, Room>();
     }
@@ -101,7 +103,25 @@ public class Room
     }
 
     public void killWumpus(){
+
         wumpus = null;
+    }
+
+    public Item getItem()
+    {
+        Item copy = item.clone();
+        item = null;
+        return copy;
+    }
+
+    public void addItem(Item i)
+    {
+        item = i;
+    }
+
+    public void setSignals(Signals signal)
+    {
+        signals.add(signal);
     }
 
 }

@@ -8,7 +8,7 @@ public class Robot {
     private int weightLimit = 0;
     private int score = 0;
     private int lives = 1;
-    //private Weapon weapon;
+    private Bow bow = new Bow();
     private int arrow = 1;
     private ArrayList <Item> items;
 

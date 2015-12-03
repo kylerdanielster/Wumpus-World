@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**>
  *  This class is the main class of the "World of Zuul" application. 
  *  "World of Zuul" is a very simple, text based adventure game.  Users 
@@ -22,6 +24,9 @@ public class Game
     private Room currentRoom;
     private Robot player;
     private Wumpus wumpus;
+    private Random random;
+    private int NUM_OF_PITS = 4;
+    private int NUM_OF_COOKIES = 2;
     //TODO: game will manage items and signals as well as rooms and player
 
 
@@ -30,6 +35,7 @@ public class Game
      */
     public Game()
     {
+        random = new Random();
         createRooms();
         setMapExits();
         parser = new Parser();
@@ -60,33 +66,6 @@ public class Game
 
         // start the game at 0,0
         currentRoom = rooms[0][0];
-
-//        Room outside, theater, pub, lab, office;
-//
-//        // create the rooms
-//        outside = new Room("outside the main entrance of the university");
-//        theater = new Room("in a lecture theater");
-//        pub = new Room("in the campus pub");
-//        lab = new Room("in a computing lab");
-//        office = new Room("in the computing admin office");
-//
-//        // initialise room exits
-//        outside.setExit("east", theater);
-//        outside.setExit("south", lab);
-//        outside.setExit("west", pub);
-//
-//        theater.setExit("west", outside);
-//
-//        pub.setExit("east", outside);
-//
-//        lab.setExit("north", outside);
-//        lab.setExit("east", office);
-//
-//        office.setExit("west", lab);
-//
-         // start game outside
-//        currentRoom = outside;
-
     }
 
 
@@ -235,8 +214,26 @@ public class Game
         }
         else {
             currentRoom = nextRoom;
+            checkCurrentRoom();
             System.out.println(currentRoom.getLongDescription());
         }
+    }
+
+    private void checkCurrentRoom() {
+        //TODO: check current room for items and enemies
+    }
+
+    private void addObstaclesAndItems()
+    {
+        //TODO: set 4 pits 2 cookie and wumpus and add signals
+        int r = random.nextInt(7) + 1;
+        int c = random.nextInt(7) + 1;
+
+    }
+
+    private void setRoomSignals(Signals signal, int r, int c)
+    {
+        rooms[r-1][c].setSignals(signal);
     }
 
     /**
