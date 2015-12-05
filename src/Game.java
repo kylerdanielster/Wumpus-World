@@ -41,6 +41,7 @@ public class Game
         parser = new Parser();
         player = Robot.getInstance();
         wumpus = Wumpus.getInstance();
+        addObstaclesAndItems();
     }
 
     /**
@@ -221,19 +222,87 @@ public class Game
 
     private void checkCurrentRoom() {
         //TODO: check current room for items and enemies
+        //if room has a pit or wumpus, death
+        //if room as gold or cookie...
+        for(Signals signal : currentRoom.getSignals())
+            System.out.println("This room is " + signal.getSignal());
     }
 
     private void addObstaclesAndItems()
     {
         //TODO: set 4 pits 2 cookie and wumpus and add signals
-        int r = random.nextInt(7) + 1;
-        int c = random.nextInt(7) + 1;
+        int r;
+        int c;
 
+
+
+        for(int i = 0; i < NUM_OF_PITS;)
+        {
+            r = random.nextInt(7) + 1;
+            c = random.nextInt(7) + 1;
+            if(!rooms[r][c].thisHasObject())
+            {
+                Pit pit = new Pit();
+                rooms[r][c].setPit(pit);
+                setRoomSignals(pit.getSignal(), r, c);
+                i++;
+                System.out.println("Pit: " + r + " " + c);
+            }
+        }
+
+        for(int i = 0; i < NUM_OF_COOKIES;)
+        {
+            r = random.nextInt(7) + 1;
+            c = random.nextInt(7) + 1;
+            if(!rooms[r][c].thisHasObject())
+            {
+                Cookie cookie = new Cookie();
+                rooms[r][c].addItem(cookie);
+                rooms[r][c].setSignals(cookie.getSignal());
+                i++;
+                System.out.println("Cookie: " + r + " " + c);
+            }
+        }
+
+        boolean hasWumpus = false;
+        while(!hasWumpus)
+        {
+            r = random.nextInt(7) + 1;
+            c = random.nextInt(7) + 1;
+            if(!rooms[r][c].thisHasObject())
+            {
+                rooms[r][c].setWumpus(wumpus);
+                setRoomSignals(wumpus.getSignal(), r, c);
+                hasWumpus = true;
+                System.out.println("Wumpus: " + r + " " + c);
+            }
+        }
+
+        boolean hasGold = false;
+        while (!hasGold)
+        {
+            r = random.nextInt(4) + 4;
+            c = random.nextInt(4) + 4;
+            if(!rooms[r][c].thisHasObject())
+            {
+                Gold gold = new Gold();
+                rooms[r][c].addItem(gold);
+                rooms[r][c].setSignals(gold.getSignal());
+                hasGold = true;
+                System.out.println("Gold: " + r + " " + c);
+            }
+        }
     }
 
     private void setRoomSignals(Signals signal, int r, int c)
     {
         rooms[r-1][c].setSignals(signal);
+        rooms[r][c-1].setSignals(signal);
+        if(r + 1 <  7)
+            rooms[r+1][c].setSignals(signal);
+        if(c + 1 < 7)
+            rooms[r][c+1].setSignals(signal);
+        //TODO: set surrounding room signals
     }
 
     /**

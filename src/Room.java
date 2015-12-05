@@ -22,6 +22,7 @@ public class Room
     private ArrayList <Signals> signals;
     private Wumpus wumpus = null;
     private Item item = null;
+    private Pit pit = null;
     private boolean hasObject = false;
 
     /** This/each room has a hash map of exits
@@ -37,7 +38,7 @@ public class Room
      */
     public Room(String description)
     {
-        signals = new ArrayList<>(signals);
+        signals = new ArrayList<Signals>();
         this.description = description;
         exits = new HashMap<String, Room>();
     }
@@ -98,8 +99,15 @@ public class Room
         return exits.get(direction);
     }
 
-    public void setWumpus(){
-        wumpus = Wumpus.getInstance();
+    public void setWumpus(Wumpus w)
+    {
+        wumpus = w;
+        hasObject = true;
+    }
+
+    public ArrayList<Signals> getSignals()
+    {
+        return new ArrayList<Signals>(signals);
     }
 
     public void killWumpus(){
@@ -117,11 +125,23 @@ public class Room
     public void addItem(Item i)
     {
         item = i;
+        hasObject = true;
     }
 
     public void setSignals(Signals signal)
     {
         signals.add(signal);
+    }
+
+    public void setPit(Pit pit)
+    {
+        hasObject = true;
+        this.pit = pit;
+    }
+
+    public boolean thisHasObject()
+    {
+        return hasObject;
     }
 
 }

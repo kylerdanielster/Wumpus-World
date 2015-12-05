@@ -2,7 +2,7 @@
  * Created by kyle on 12/2/15.
  */
 public class Cookie extends Item{
-    Signals aroma;
+    private Signals aroma;
 
     public Cookie()
     {
@@ -20,6 +20,11 @@ public class Cookie extends Item{
     public Cookie clone()
     {
         return new Cookie(this);
+    }
+
+    public Signals getSignal()
+    {
+        return new Signals(aroma);
     }
 
 }
