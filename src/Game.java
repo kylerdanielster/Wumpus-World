@@ -161,8 +161,14 @@ public class Game
         return wantToQuit;
     }
 
-    private void items() {
-
+    private void items()
+    {
+        System.out.println("Items:");
+        for (Item i : player.getItems()) {
+            System.out.println(i.getDescription());
+        }
+        if (player.getItems().isEmpty())
+            System.out.println("No items");
     }
 
     private void dropItem(Command command) {
@@ -175,6 +181,37 @@ public class Game
 
     private void shootRoom(Command command) {
 
+        if(player.getArrow() == 0)
+        {
+            System.out.println("You have no arrows.");
+            return;
+        }
+
+        if (!command.hasSecondWord()) {
+            // if there is no second word, we don't know where to go...
+            System.out.println("Shoot where?");
+            return;
+        }
+
+        String direction = command.getSecondWord();
+
+        // check for a room in the desired direction
+        Room nextRoom = currentRoom.getExit(direction);
+
+        if (nextRoom == null) {
+            System.out.println("There is nothing to shoot!");
+            return;
+        }
+
+        if(nextRoom.hasWumpus() == null)
+        {
+            System.out.println("You missed the Wumpus.");
+        }
+
+        if(nextRoom.hasWumpus() != null) {
+            System.out.println("You killed the Wumpus");
+            nextRoom.killWumpus();
+        }
     }
 
     // implementations of user commands:
@@ -234,8 +271,6 @@ public class Game
         int r;
         int c;
 
-
-
         for(int i = 0; i < NUM_OF_PITS;)
         {
             r = random.nextInt(7) + 1;
@@ -258,7 +293,7 @@ public class Game
             {
                 Cookie cookie = new Cookie();
                 rooms[r][c].addItem(cookie);
-                rooms[r][c].setSignals(cookie.getSignal());
+                setRoomSignals(cookie.getSignal(), r, c);
                 i++;
                 System.out.println("Cookie: " + r + " " + c);
             }
@@ -302,6 +337,15 @@ public class Game
             rooms[r+1][c].setSignals(signal);
         if(c + 1 < 7)
             rooms[r][c+1].setSignals(signal);
+    }
+
+    private void removeRoomSignals(Room room) {
+//        room.setSignals(signal);
+//        rooms[r][c - 1].setSignals(signal);
+//        if (r + 1 < 7)
+//            rooms[r + 1][c].setSignals(signal);
+//        if (c + 1 < 7)
+//            rooms[r][c + 1].setSignals(signal);
         //TODO: set surrounding room signals
     }
 

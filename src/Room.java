@@ -133,6 +133,17 @@ public class Room
         signals.add(signal);
     }
 
+    public void removeSignal(String signal)
+    {
+        for( Signals s : signals)
+        {
+            if (s.getSignal().equals(signal))
+            {
+                s.setSignal("");
+            }
+        }
+    }
+
     public void setPit(Pit pit)
     {
         hasObject = true;
@@ -142,6 +153,11 @@ public class Room
     public boolean thisHasObject()
     {
         return hasObject;
+    }
+
+    public Wumpus hasWumpus()
+    {
+        return wumpus;
     }
 
 }

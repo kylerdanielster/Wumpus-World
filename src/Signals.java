@@ -3,7 +3,7 @@
  */
 public class Signals {
 
-    String signal;
+    public String signal;
     public Signals(String s)
     {
         signal = s;
@@ -22,5 +22,10 @@ public class Signals {
     public String getSignal()
     {
         return signal;
+    }
+
+    public void setSignal(String s)
+    {
+        signal = s;
     }
 }
