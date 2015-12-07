@@ -16,17 +16,18 @@ import java.util.HashMap;
  * @version 2011.08.08
  */
 
-public class Room
-{
+public class Room {
     private String description;
-    private ArrayList <Signals> signals;
+    private ArrayList<Signals> signals;
     private Wumpus wumpus = null;
     private Item item = null;
     private Pit pit = null;
     private boolean hasObject = false;
+    private int x, y;
 
-    /** This/each room has a hash map of exits
-     *  String direction, Room direction destination
+    /**
+     * This/each room has a hash map of exits
+     * String direction, Room direction destination
      */
     private HashMap<String, Room> exits;        // stores exits of this room.
 
@@ -34,10 +35,12 @@ public class Room
      * Create a room described "description". Initially, it has
      * no exits. "description" is something like "a kitchen" or
      * "an open court yard".
+     *
      * @param description The room's description.
      */
-    public Room(String description)
-    {
+    public Room(String description, int x, int y) {
+        this.x = x;
+        this.y = y;
         signals = new ArrayList<Signals>();
         this.description = description;
         exits = new HashMap<String, Room>();
@@ -45,11 +48,11 @@ public class Room
 
     /**
      * Define an exit from this room.
+     *
      * @param direction The direction of the exit.
      * @param neighbor  The room to which the exit leads.
      */
-    public void setExit(String direction, Room neighbor)
-    {
+    public void setExit(String direction, Room neighbor) {
         exits.put(direction, neighbor);
     }
 
@@ -57,32 +60,31 @@ public class Room
      * @return The short description of the room
      * (the one that was defined in the constructor).
      */
-    public String getShortDescription()
-    {
+    public String getShortDescription() {
         return description;
     }
 
     /**
      * Return a description of the room in the form:
-     *     You are in the kitchen.
-     *     Exits: north west
+     * You are in the kitchen.
+     * Exits: north west
+     *
      * @return A long description of this room
      */
-    public String getLongDescription()
-    {
+    public String getLongDescription() {
         return "You are " + description + ".\n" + getExitString();
     }
 
     /**
      * Return a string describing the room's exits, for example
      * "Exits: north west".
+     *
      * @return Details of the room's exits.
      */
-    private String getExitString()
-    {
+    private String getExitString() {
         String returnString = "Exits:";
         Set<String> keys = exits.keySet();
-        for(String exit : keys) {
+        for (String exit : keys) {
             returnString += " " + exit;
         }
         return returnString;
@@ -91,73 +93,77 @@ public class Room
     /**
      * Return the room that is reached if we go from this room in direction
      * "direction". If there is no room in that direction, return null.
+     *
      * @param direction The exit's direction.
      * @return The room in the given direction.
      */
-    public Room getExit(String direction)
-    {
+    public Room getExit(String direction) {
         return exits.get(direction);
     }
 
-    public void setWumpus(Wumpus w)
-    {
+    public void setWumpus(Wumpus w) {
         wumpus = w;
         hasObject = true;
     }
 
-    public ArrayList<Signals> getSignals()
-    {
+    public ArrayList<Signals> getSignals() {
         return new ArrayList<Signals>(signals);
     }
 
-    public void killWumpus(){
+    public void killWumpus() {
 
         wumpus = null;
     }
 
-    public Item getItem()
-    {
+    public Item getItem() {
         Item copy = item.clone();
         item = null;
         return copy;
     }
 
-    public void addItem(Item i)
-    {
+    public void addItem(Item i) {
         item = i;
         hasObject = true;
     }
 
-    public void setSignals(Signals signal)
-    {
+    public void setSignals(Signals signal) {
         signals.add(signal);
     }
 
-    public void removeSignal(String signal)
-    {
-        for( Signals s : signals)
-        {
-            if (s.getSignal().equals(signal))
-            {
+    public void removeSignal(String signal) {
+        for (Signals s : signals) {
+            if (s.getSignal().equals(signal)) {
                 s.setSignal("");
             }
         }
     }
 
-    public void setPit(Pit pit)
-    {
+    public void setPit(Pit pit) {
         hasObject = true;
         this.pit = pit;
     }
 
-    public boolean thisHasObject()
+    public Pit hasPit()
     {
+        return pit;
+    }
+
+
+    public boolean thisHasObject() {
         return hasObject;
     }
 
-    public Wumpus hasWumpus()
-    {
+    public Wumpus hasWumpus() {
         return wumpus;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY()
+    {
+        return y;
     }
 
 }

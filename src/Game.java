@@ -56,15 +56,11 @@ public class Game
         {
             for (int j = 0; j < 8; j++)
             {
-                rooms[i][j] = new Room(i + "," + j);
+                rooms[i][j] = new Room(i + "," + j, i, j);
                 System.out.print(" " + rooms[i][j].getShortDescription());
             }
             System.out.println();
         }
-
-        // initialize the room exits
-        // set in the constructor
-
         // start the game at 0,0
         currentRoom = rooms[0][0];
     }
@@ -114,8 +110,8 @@ public class Game
     private void printWelcome()
     {
         System.out.println();
-        System.out.println("Welcome to the World of Zuul!");
-        System.out.println("World of Zuul is a new, incredibly boring adventure game.");
+        System.out.println("Welcome to the Wumpus world!");
+        System.out.println("Your only hope of escape is to find some gold and bring it back here.");
         System.out.println("Type 'help' if you need help.");
         System.out.println();
         System.out.println(currentRoom.getLongDescription());
@@ -172,11 +168,14 @@ public class Game
     }
 
     private void dropItem(Command command) {
-
+        //TODO:
+        //currentRoom.addItem();
     }
 
     private void grabItem(Command command) {
-
+        //TODO:
+        player.getItems().add(currentRoom.getItem());
+        // if item is cookie, eat it and get stronger
     }
 
     private void shootRoom(Command command) {
@@ -211,6 +210,7 @@ public class Game
         if(nextRoom.hasWumpus() != null) {
             System.out.println("You killed the Wumpus");
             nextRoom.killWumpus();
+            removeRoomSignals(nextRoom, wumpus.getSignal());
         }
     }
 
@@ -224,7 +224,7 @@ public class Game
     private void printHelp()
     {
         System.out.println("You are lost. You are alone. You wander");
-        System.out.println("around at the university.");
+        System.out.println("around the Wumpus world.");
         System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
@@ -260,16 +260,37 @@ public class Game
     private void checkCurrentRoom() {
         //TODO: check current room for items and enemies
         //if room has a pit or wumpus, death
-        //if room as gold or cookie...
         for(Signals signal : currentRoom.getSignals())
             System.out.println("This room is " + signal.getSignal());
+
+        if(currentRoom.hasWumpus() != null)
+        {
+            System.out.println("The Wumpus found you and ate you!");
+            if(player.getLives() > 0) {
+                player.setLives(player.getLives() - 1);
+                System.out.println("You have one more chance.");
+                currentRoom = rooms[0][0];
+                System.out.println(currentRoom.getLongDescription());
+            }
+        } else {
+            //TODO: exit game
+        }
+
+        if(currentRoom.hasPit() != null)
+        {
+            System.out.println("You fell into a pit and died.");
+            player.setLives(player.getLives() - 1);
+            System.out.println("You have one more chance.");
+            currentRoom = rooms[0][0];
+            System.out.println(currentRoom.getLongDescription());
+        } else {
+            //TODO: exit game
+        }
     }
 
     private void addObstaclesAndItems()
     {
-        //TODO: set 4 pits 2 cookie and wumpus and add signals
-        int r;
-        int c;
+        int r, c;
 
         for(int i = 0; i < NUM_OF_PITS;)
         {
@@ -339,14 +360,19 @@ public class Game
             rooms[r][c+1].setSignals(signal);
     }
 
-    private void removeRoomSignals(Room room) {
-//        room.setSignals(signal);
-//        rooms[r][c - 1].setSignals(signal);
-//        if (r + 1 < 7)
-//            rooms[r + 1][c].setSignals(signal);
-//        if (c + 1 < 7)
-//            rooms[r][c + 1].setSignals(signal);
-        //TODO: set surrounding room signals
+    private void removeRoomSignals(Room room, Signals signals ) {
+        int r = room.getX();
+        int c = room.getY();
+
+
+       //TODO: remove surrounding room signals
+        for(Signals signal : room.getSignals())
+        {
+            if(signal.getSignal().equals(signals.getSignal()))
+            {
+                signal.setSignal("");
+            }
+        }
     }
 
     /**
