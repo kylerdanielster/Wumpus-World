@@ -126,6 +126,11 @@ public class Room {
         hasObject = true;
     }
 
+    public void removeItem()
+    {
+        item = null;
+    }
+
     public void setSignals(Signals signal) {
         signals.add(signal);
     }
@@ -164,6 +169,13 @@ public class Room {
     public int getY()
     {
         return y;
+    }
+
+    public String getItemDescription()
+    {
+        if(item != null)
+            return item.getDescription();
+        return "None";
     }
 
 }

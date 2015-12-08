@@ -7,6 +7,7 @@ public class Gold extends Item {
     public Gold() {
         super();
         glitters = new Signals("Something is glittering.");
+        description = "gold";
 
     }
 

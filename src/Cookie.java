@@ -8,7 +8,7 @@ public class Cookie extends Item{
     {
         super();
         aroma = new Signals("Something smells good");
-
+        description = "cookie";
     }
 
     public Cookie(Cookie cookie)

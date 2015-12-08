@@ -169,12 +169,30 @@ public class Game
 
     private void dropItem(Command command) {
         //TODO:
-        //currentRoom.addItem();
+        for(Item i : player.getItems())
+        {
+            if(i.getDescription().equals(command))
+                currentRoom.addItem(i);
+        }
+        //TODO: add signals
     }
 
     private void grabItem(Command command) {
         //TODO:
-        player.getItems().add(currentRoom.getItem());
+        if(currentRoom.getItemDescription().equals(command.getSecondWord())) {
+            if (currentRoom.getItemDescription().equals("cookie"))
+            {
+                currentRoom.removeItem();
+                player.setWeightLimit(player.getWeightLimit() + 10);
+                System.out.println("You can now carry more weight.");
+                //TODO: remove signals
+            } else {
+                player.getItems().add(currentRoom.getItem());
+                  //TODO: remove signals
+            }
+        } else {
+            System.out.println("Item not present.");
+        }
         // if item is cookie, eat it and get stronger
     }
 
@@ -282,7 +300,7 @@ public class Game
             player.setLives(player.getLives() - 1);
             System.out.println("You have one more chance.");
             currentRoom = rooms[0][0];
-            System.out.println(currentRoom.getLongDescription());
+            //System.out.println(currentRoom.getLongDescription());
         } else {
             //TODO: exit game
         }
@@ -352,6 +370,7 @@ public class Game
 
     private void setRoomSignals(Signals signal, int r, int c)
     {
+        rooms[r][c].setSignals(signal);
         rooms[r-1][c].setSignals(signal);
         rooms[r][c-1].setSignals(signal);
         if(r + 1 <  7)
