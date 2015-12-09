@@ -22,7 +22,6 @@ public class Robot {
         }
         return robotInstance;
     }
-    //TODO: Detect Sensors
 
     public int getWeightLimit() {
         return weightLimit;

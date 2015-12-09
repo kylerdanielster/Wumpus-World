@@ -27,8 +27,6 @@ public class Game
     private Random random;
     private int NUM_OF_PITS = 4;
     private int NUM_OF_COOKIES = 2;
-    //TODO: game will manage items and signals as well as rooms and player
-
 
     /**
      * Create the game and initialise its internal map.
@@ -168,24 +166,24 @@ public class Game
     }
 
     private void dropItem(Command command) {
-        //TODO:
         for(Item i : player.getItems())
         {
-            if(i.getDescription().equals(command))
+            if(i.getDescription().equals(command)) {
                 currentRoom.addItem(i);
+                setRoomSignals(i.getSignal(), currentRoom.getX(), currentRoom.getY());
+            }
         }
         //TODO: add signals
     }
 
     private void grabItem(Command command) {
-        //TODO:
         if(currentRoom.getItemDescription().equals(command.getSecondWord())) {
             if (currentRoom.getItemDescription().equals("cookie"))
             {
                 currentRoom.removeItem();
                 player.setWeightLimit(player.getWeightLimit() + 10);
                 System.out.println("You can now carry more weight.");
-                //TODO: remove signals
+                //TODO: removeRoomSignals(currentRoom, );
             } else {
                 player.getItems().add(currentRoom.getItem());
                   //TODO: remove signals
@@ -193,7 +191,6 @@ public class Game
         } else {
             System.out.println("Item not present.");
         }
-        // if item is cookie, eat it and get stronger
     }
 
     private void shootRoom(Command command) {
@@ -231,8 +228,6 @@ public class Game
             removeRoomSignals(nextRoom, wumpus.getSignal());
         }
     }
-
-    // implementations of user commands:
 
     /**
      * Print out some help information.
@@ -276,8 +271,7 @@ public class Game
     }
 
     private void checkCurrentRoom() {
-        //TODO: check current room for items and enemies
-        //if room has a pit or wumpus, death
+        //TODO: is this printing twice??????????
         for(Signals signal : currentRoom.getSignals())
             System.out.println("This room is " + signal.getSignal());
 
@@ -383,13 +377,12 @@ public class Game
         int r = room.getX();
         int c = room.getY();
 
-
        //TODO: remove surrounding room signals
         for(Signals signal : room.getSignals())
         {
             if(signal.getSignal().equals(signals.getSignal()))
             {
-                signal.setSignal("");
+                room.getSignals().remove(signal);
             }
         }
     }

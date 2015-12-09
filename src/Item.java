@@ -5,9 +5,10 @@ import java.util.Objects;
  */
 public abstract class Item {
 
-    String description;
-    int weight;
-    int score;
+    private Signals signal = null;
+    private String description;
+    private int weight;
+    private int score;
 
     public Item(){}
 
@@ -25,6 +26,11 @@ public abstract class Item {
         return description;
     }
 
+    public void setDescription(String s)
+    {
+        description = s;
+    }
+
     public int getWeight()
     {
         return weight;
@@ -34,5 +40,11 @@ public abstract class Item {
     {
         return score;
     }
+
+    public Signals getSignal()
+    {
+        return new Signals(signal);
+    }
+
 
 }

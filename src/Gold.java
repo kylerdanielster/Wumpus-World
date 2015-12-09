@@ -6,16 +6,13 @@ public class Gold extends Item {
 
     public Gold() {
         super();
-        glitters = new Signals("Something is glittering.");
-        description = "gold";
-
+        glitters = new Signals("glittering.");
+        setDescription("gold");
     }
-
 
     public Gold(Gold gold) {
         super();
         this.glitters = gold.glitters;
-
     }
 
     public Gold clone() {
