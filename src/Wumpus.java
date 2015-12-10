@@ -3,7 +3,7 @@
  */
 public class Wumpus {
     private static Wumpus wumpusInstance;
-    private Signals stinky = new Signals("stinky");
+    private String signal = "stinky";
 
     private Wumpus(){}
 
@@ -14,8 +14,11 @@ public class Wumpus {
         return wumpusInstance;
     }
 
-    public Signals getSignal()
-    {
-        return new Signals(stinky);
+    public String getSignal() {
+        return signal;
+    }
+
+    public void setSignal(String signal) {
+        this.signal = signal;
     }
 }

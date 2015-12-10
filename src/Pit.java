@@ -2,23 +2,24 @@
  * Created by kyle on 12/2/15.
  */
 public class Pit {
-    private Signals breezy;
+    private String signal;
     public Pit()
     {
-        breezy = new Signals("breeze");
+        signal = "breezy";
     }
 
     public Pit(Pit pit)
     {
-        this.breezy = pit.breezy;
+        this.signal = pit.signal;
     }
 
     public Pit clone()
     {
         return new Pit(this);
     }
-    public Signals getSignal()
+
+    public String getSignal()
     {
-        return breezy;
+        return signal;
     }
 }

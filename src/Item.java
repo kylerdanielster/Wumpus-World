@@ -5,7 +5,7 @@ import java.util.Objects;
  */
 public abstract class Item {
 
-    private Signals signal = null;
+    private String signal;
     private String description;
     private int weight;
     private int score;
@@ -14,6 +14,7 @@ public abstract class Item {
 
     public Item(Item i)
     {
+        this.signal = i.signal;
         this.description = i.description;
         this.weight = i.weight;
         this.score = i.score;
@@ -41,10 +42,8 @@ public abstract class Item {
         return score;
     }
 
-    public Signals getSignal()
-    {
-        return new Signals(signal);
-    }
+    public abstract String getSignal();
+
 
 
 }

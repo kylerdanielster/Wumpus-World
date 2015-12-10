@@ -95,10 +95,11 @@ public class Game
         // execute them until the game is over.
 
         boolean finished = false;
-        while (! finished) {
+        while (! finished && player.getLives() > 0 && !rooms[0][0].thisHasObject()) {
             Command command = parser.getCommand();
             finished = processCommand(command);
         }
+        System.out.println("Total score: " + player.getScore());
         System.out.println("Thank you for playing.  Good bye.");
     }
 
@@ -158,21 +159,14 @@ public class Game
     private void items()
     {
         System.out.println("Items:");
-        for (Item i : player.getItems()) {
-            System.out.println(i.getDescription());
-        }
-        if (player.getItems().isEmpty())
-            System.out.println("No items");
+        player.showItems();
     }
 
     private void dropItem(Command command) {
-        for(Item i : player.getItems())
-        {
-            if(i.getDescription().equals(command)) {
-                currentRoom.addItem(i);
-                currentRoom.setSignals(i.getSignal());
-                //setRoomSignals(i.getSignal(), currentRoom.getX(), currentRoom.getY());
-            }
+        if(player.hasItems()) {
+            currentRoom.addItem(player.dropItem());
+        } else {
+            System.out.println("No items to drop.");
         }
     }
 
@@ -180,13 +174,17 @@ public class Game
         if(currentRoom.getItemDescription().equals(command.getSecondWord())) {
             if (currentRoom.getItemDescription().equals("cookie"))
             {
-                currentRoom.removeItem();
+                currentRoom.removeSignal(currentRoom.getItem().getSignal());
                 player.setWeightLimit(player.getWeightLimit() + 10);
+                player.setScore(player.getScore() + 50 );
                 System.out.println("You can now carry more weight.");
-                removeRoomSignals(currentRoom, "cookie");
+                currentRoom.removeItem();
+                //TODO: VERIFY IT WORKS: remove signals
             } else {
-                player.getItems().add(currentRoom.getItem());
-                  removeRoomSignals(currentRoom, "gold");
+                System.out.println("You got the gold");
+                player.setScore(player.getScore() + 100);
+                player.addItem(currentRoom.getItem());
+                //TODO: VERIFY IT WORKS: remove signals
             }
         } else {
             System.out.println("Item not present.");
@@ -194,6 +192,7 @@ public class Game
     }
 
     private void shootRoom(Command command) {
+
 
         if(player.getArrow() == 0)
         {
@@ -217,6 +216,8 @@ public class Game
             return;
         }
 
+        player.setArrow(player.getArrow() - 1);
+
         if(nextRoom.hasWumpus() == null)
         {
             System.out.println("You missed the Wumpus.");
@@ -225,7 +226,7 @@ public class Game
         if(nextRoom.hasWumpus() != null) {
             System.out.println("You killed the Wumpus");
             nextRoom.killWumpus();
-            removeRoomSignals(nextRoom, "stinky");
+            removeRoomSignals(nextRoom, wumpus.getSignal());
         }
     }
 
@@ -271,31 +272,27 @@ public class Game
     }
 
     private void checkCurrentRoom() {
-        for(Signals signal : currentRoom.getSignals())
-            System.out.println("This room is " + signal.getSignal());
+        for(String signal : currentRoom.getSignals())
+            System.out.println("This room is " + signal);
 
         if(currentRoom.hasWumpus() != null)
         {
             System.out.println("The Wumpus found you and ate you!");
+            player.setLives(player.getLives() - 1);
             if(player.getLives() > 0) {
-                player.setLives(player.getLives() - 1);
                 System.out.println("You have one more chance.");
                 currentRoom = rooms[0][0];
-                System.out.println(currentRoom.getLongDescription());
             }
-        } else {
-            //TODO: exit game
         }
 
         if(currentRoom.hasPit() != null)
         {
             System.out.println("You fell into a pit and died.");
             player.setLives(player.getLives() - 1);
-            System.out.println("You have one more chance.");
-            currentRoom = rooms[0][0];
-            //System.out.println(currentRoom.getLongDescription());
-        } else {
-            //TODO: exit game
+            if (player.getLives() > 0) {
+                System.out.println("You have one more chance.");
+                currentRoom = rooms[0][0];
+            }
         }
     }
 
@@ -326,7 +323,6 @@ public class Game
                 Cookie cookie = new Cookie();
                 rooms[r][c].addItem(cookie);
                 rooms[r][c].setSignals(cookie.getSignal());
-//                setRoomSignals(cookie.getSignal(), r, c);
                 i++;
                 System.out.println("Cookie: " + r + " " + c);
             }
@@ -362,7 +358,7 @@ public class Game
         }
     }
 
-    private void setRoomSignals(Signals signal, int r, int c)
+    private void setRoomSignals(String signal, int r, int c)
     {
         rooms[r][c].setSignals(signal);
         rooms[r-1][c].setSignals(signal);
@@ -373,24 +369,18 @@ public class Game
             rooms[r][c+1].setSignals(signal);
     }
 
-    private void removeRoomSignals(Room room, String s ) {
+    private void removeRoomSignals(Room room, String signal ) {
         int r = room.getX();
         int c = room.getY();
 
        //TODO: remove surrounding room signals
-        for(Signals signal : room.getSignals())
-        {
-            if(signal.getSignal().equals(s))
-            {
-                room.getSignals().remove(signal);
-                rooms[r-1][c].getSignals().remove(signal);
-                rooms[r][c-1].getSignals().remove(signal);
-                if(r + 1 <  7)
-                    rooms[r+1][c].getSignals().remove(signal);
-                if(c + 1 < 7)
-                    rooms[r][c+1].getSignals().remove(signal);
-            }
-        }
+        rooms[r][c].removeSignal(signal);
+        rooms[r-1][c].removeSignal(signal);
+        rooms[r][c-1].removeSignal(signal);
+        if(r + 1 <  7)
+            rooms[r+1][c].removeSignal(signal);
+        if(c + 1 < 7)
+            rooms[r][c+1].removeSignal(signal);
     }
 
     /**

@@ -1,3 +1,5 @@
+import com.sun.org.apache.xerces.internal.impl.xpath.XPath;
+
 import java.util.ArrayList;
 import java.util.Set;
 import java.util.HashMap;
@@ -18,7 +20,7 @@ import java.util.HashMap;
 
 public class Room {
     private String description;
-    private ArrayList<Signals> signals;
+    private ArrayList<String> signals;
     private Wumpus wumpus = null;
     private Item item = null;
     private Pit pit = null;
@@ -41,7 +43,7 @@ public class Room {
     public Room(String description, int x, int y) {
         this.x = x;
         this.y = y;
-        signals = new ArrayList<Signals>();
+        signals = new ArrayList<String>();
         this.description = description;
         exits = new HashMap<String, Room>();
     }
@@ -72,7 +74,7 @@ public class Room {
      * @return A long description of this room
      */
     public String getLongDescription() {
-        return "You are " + description + ".\n" + getExitString();
+        return "You are at " + description + ".\n" + getExitString();
     }
 
     /**
@@ -106,8 +108,8 @@ public class Room {
         hasObject = true;
     }
 
-    public ArrayList<Signals> getSignals() {
-        return new ArrayList<Signals>(signals);
+    public ArrayList<String> getSignals() {
+        return new ArrayList<String>(signals);
     }
 
     public void killWumpus() {
@@ -131,16 +133,12 @@ public class Room {
         item = null;
     }
 
-    public void setSignals(Signals signal) {
+    public void setSignals(String signal) {
         signals.add(signal);
     }
 
     public void removeSignal(String signal) {
-        for (Signals s : signals) {
-            if (s.getSignal().equals(signal)) {
-                s.setSignal("");
-            }
-        }
+        signals.remove(signal);
     }
 
     public void setPit(Pit pit) {

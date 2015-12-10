@@ -7,10 +7,9 @@ public class Robot {
 
     private int weightLimit = 50;
     private int score = 0;
-    private int lives = 1;
-    private Bow bow = new Bow();
+    private int lives = 2;
     private int arrow = 1;
-    private ArrayList <Item> items = new ArrayList<>();
+    private Item items = null;
 
     private static Robot robotInstance;
 
@@ -55,8 +54,32 @@ public class Robot {
         this.arrow = arrow;
     }
 
-    public ArrayList<Item> getItems()
+    public void showItems()
     {
-        return new ArrayList<Item>(items);
+        if(items != null) {
+            System.out.println(items.getDescription());
+        } else {
+            System.out.println("None");
+        }
+    }
+
+    public Item dropItem()
+    {
+        return items;
+    }
+
+    public boolean hasItems()
+    {
+        if(items == null)
+            return false;
+        else
+            return true;
+    }
+
+
+
+    public void addItem(Item i)
+    {
+        items = i;
     }
 }

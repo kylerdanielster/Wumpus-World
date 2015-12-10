@@ -2,26 +2,28 @@
  * Created by kyle on 12/2/15.
  */
 public class Gold extends Item {
-    private Signals glitters;
+    private String signal;
+
 
     public Gold() {
         super();
-        glitters = new Signals("glittering.");
+        signal = "glittering.";
         setDescription("gold");
+
     }
 
     public Gold(Gold gold) {
         super();
-        this.glitters = gold.glitters;
+        this.signal = gold.signal;
     }
 
     public Gold clone() {
         return new Gold(this);
     }
 
-    public Signals getSignal()
+    public String getSignal()
     {
-        return new Signals(glitters);
+        return signal;
     }
 
 }

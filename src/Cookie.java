@@ -2,19 +2,19 @@
  * Created by kyle on 12/2/15.
  */
 public class Cookie extends Item{
-    private Signals aroma;
+    private String signal;
 
     public Cookie()
     {
         super();
-        aroma = new Signals("smelling good");
+        signal = "smelling good";
         setDescription("cookie");
     }
 
     public Cookie(Cookie cookie)
     {
         super();
-        this.aroma = cookie.aroma;
+        this.signal = cookie.signal;
     }
 
     public Cookie clone()
@@ -22,9 +22,9 @@ public class Cookie extends Item{
         return new Cookie(this);
     }
 
-    public Signals getSignal()
+    public String getSignal()
     {
-        return new Signals(aroma);
+        return signal;
     }
 
 }
