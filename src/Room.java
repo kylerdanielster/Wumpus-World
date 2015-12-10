@@ -119,7 +119,6 @@ public class Room {
 
     public Item getItem() {
         Item copy = item.clone();
-        item = null;
         return copy;
     }
 

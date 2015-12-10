@@ -184,6 +184,7 @@ public class Game
                 System.out.println("You got the gold");
                 player.setScore(player.getScore() + 100);
                 player.addItem(currentRoom.getItem());
+                currentRoom.removeItem();
                 //TODO: VERIFY IT WORKS: remove signals
             }
         } else {

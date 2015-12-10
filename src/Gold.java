@@ -8,12 +8,12 @@ public class Gold extends Item {
     public Gold() {
         super();
         signal = "glittering.";
-        setDescription("gold");
+        this.setDescription("gold");
 
     }
 
     public Gold(Gold gold) {
-        super();
+        super(gold);
         this.signal = gold.signal;
     }
 

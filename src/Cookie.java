@@ -13,7 +13,7 @@ public class Cookie extends Item{
 
     public Cookie(Cookie cookie)
     {
-        super();
+        super(cookie);
         this.signal = cookie.signal;
     }
 
