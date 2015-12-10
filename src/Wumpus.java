@@ -3,7 +3,7 @@
  */
 public class Wumpus {
     private static Wumpus wumpusInstance;
-    private Signals stinky = new Signals("Stinky");
+    private Signals stinky = new Signals("stinky");
 
     private Wumpus(){}
 

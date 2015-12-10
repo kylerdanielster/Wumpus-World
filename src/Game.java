@@ -170,10 +170,10 @@ public class Game
         {
             if(i.getDescription().equals(command)) {
                 currentRoom.addItem(i);
-                setRoomSignals(i.getSignal(), currentRoom.getX(), currentRoom.getY());
+                currentRoom.setSignals(i.getSignal());
+                //setRoomSignals(i.getSignal(), currentRoom.getX(), currentRoom.getY());
             }
         }
-        //TODO: add signals
     }
 
     private void grabItem(Command command) {
@@ -183,10 +183,10 @@ public class Game
                 currentRoom.removeItem();
                 player.setWeightLimit(player.getWeightLimit() + 10);
                 System.out.println("You can now carry more weight.");
-                //TODO: removeRoomSignals(currentRoom, );
+                removeRoomSignals(currentRoom, "cookie");
             } else {
                 player.getItems().add(currentRoom.getItem());
-                  //TODO: remove signals
+                  removeRoomSignals(currentRoom, "gold");
             }
         } else {
             System.out.println("Item not present.");
@@ -225,7 +225,7 @@ public class Game
         if(nextRoom.hasWumpus() != null) {
             System.out.println("You killed the Wumpus");
             nextRoom.killWumpus();
-            removeRoomSignals(nextRoom, wumpus.getSignal());
+            removeRoomSignals(nextRoom, "stinky");
         }
     }
 
@@ -271,7 +271,6 @@ public class Game
     }
 
     private void checkCurrentRoom() {
-        //TODO: is this printing twice??????????
         for(Signals signal : currentRoom.getSignals())
             System.out.println("This room is " + signal.getSignal());
 
@@ -326,7 +325,8 @@ public class Game
             {
                 Cookie cookie = new Cookie();
                 rooms[r][c].addItem(cookie);
-                setRoomSignals(cookie.getSignal(), r, c);
+                rooms[r][c].setSignals(cookie.getSignal());
+//                setRoomSignals(cookie.getSignal(), r, c);
                 i++;
                 System.out.println("Cookie: " + r + " " + c);
             }
@@ -373,16 +373,22 @@ public class Game
             rooms[r][c+1].setSignals(signal);
     }
 
-    private void removeRoomSignals(Room room, Signals signals ) {
+    private void removeRoomSignals(Room room, String s ) {
         int r = room.getX();
         int c = room.getY();
 
        //TODO: remove surrounding room signals
         for(Signals signal : room.getSignals())
         {
-            if(signal.getSignal().equals(signals.getSignal()))
+            if(signal.getSignal().equals(s))
             {
                 room.getSignals().remove(signal);
+                rooms[r-1][c].getSignals().remove(signal);
+                rooms[r][c-1].getSignals().remove(signal);
+                if(r + 1 <  7)
+                    rooms[r+1][c].getSignals().remove(signal);
+                if(c + 1 < 7)
+                    rooms[r][c+1].getSignals().remove(signal);
             }
         }
     }
