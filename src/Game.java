@@ -179,13 +179,11 @@ public class Game
                 player.setScore(player.getScore() + 50 );
                 System.out.println("You can now carry more weight.");
                 currentRoom.removeItem();
-                //TODO: VERIFY IT WORKS: remove signals
             } else {
                 System.out.println("You got the gold");
                 player.setScore(player.getScore() + 100);
                 player.addItem(currentRoom.getItem());
                 currentRoom.removeItem();
-                //TODO: VERIFY IT WORKS: remove signals
             }
         } else {
             System.out.println("Item not present.");
@@ -374,7 +372,6 @@ public class Game
         int r = room.getX();
         int c = room.getY();
 
-       //TODO: remove surrounding room signals
         rooms[r][c].removeSignal(signal);
         rooms[r-1][c].removeSignal(signal);
         rooms[r][c-1].removeSignal(signal);
